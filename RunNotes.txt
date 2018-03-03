@@ -1,0 +1,8 @@
+# This is how I have start to run things out of the docker container.
+# they are almost certainly not the correct way to do things
+
+# creating the correct image from the cuda docker file
+sudo docker build -f /drives/main/Developement/CUDATestGround/CUDADockerFile . -t fedora/cudaimage:v0.1
+
+# command to run created image
+sudo docker run -ti -v /usr/local/cuda-9.0:/usr/local/cuda-9.0  fedora/cudaimage:v0.1 /bin/sh

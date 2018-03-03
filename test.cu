@@ -7,7 +7,7 @@ void add(int n, float *x, float *y)
         y[i] = x[i] + y[i];
 }
 
-void main(void)
+int main(void)
 {
     int N = 1<<20;
 

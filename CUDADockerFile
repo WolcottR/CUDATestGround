@@ -1,0 +1,7 @@
+FROM fedora:25
+RUN dnf -y update && \
+    dnf -y install gcc && \
+    dnf -y install gcc-c++
+# Right now can't path above where image is stored
+# COPY ../../../../usr/local/cuda-9.0 /usr/local/cuda-9.0
+COPY . /CUDATestGround

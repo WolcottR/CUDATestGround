@@ -6,3 +6,6 @@ sudo docker build -f /drives/main/Developement/CUDATestGround/CUDADockerFile . -
 
 # command to run created image
 sudo docker run -ti -v /usr/local/cuda-9.0:/usr/local/cuda-9.0  fedora/cudaimage:v0.1 /bin/sh
+
+# command to copy compiled files out of a container into current path
+sudo docker cp ${container_name}:/docker/path/to/file .

@@ -1,6 +1,12 @@
 # This is how I have start to run things out of the docker container.
 # they are almost certainly not the correct way to do things
 
+# here is how to start docker when my latop starts
+sudo systemctl start docker
+
+# here is how to check for the container name
+sudo docker ps -a
+
 # creating the correct image from the cuda docker file
 sudo docker build -f /drives/main/Developement/CUDATestGround/CUDADockerFile . -t fedora/cudaimage:v0.1
 
@@ -13,5 +19,24 @@ sudo docker cp ${container_name}:/docker/path/to/file .
 # compile with cuda compiler and create executable
 /usr/local/cuda-9.0/bin/nvcc test.cu -o driver
 
-# website for installing nvidia correctly
-https://www.if-not-true-then-false.com/2015/fedora-nvidia-guide/
+# use rpm fusion for correct nvidia driver installs
+
+# TODO
+look up how to delete images and containers
+
+#Thoughts
+I need to figure out a first project to use with the cuda compiler
+Things I want this project to use since I feel they will help my resume
+and growth
+1. CUDA (obviously)
+2. MT capability
+3. good object-oriented architecture
+4. templetization
+5. SWIG (maybe)
+
+Project ideas
+1. Something CFD related
+2. Something machine learning related
+3. what else is there?
+
+

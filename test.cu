@@ -14,26 +14,20 @@ int main(void)
     int N = 1<<20;
 
     // create and allocate the memory
-    std::cout << "Pre-Allocation" << std::endl;
     float *x, *y;
     cudaMallocManaged(&x, N*sizeof(float));
     cudaMallocManaged(&y, N*sizeof(float));
-    std::cout << "Post-Allocation" << std::endl;
+    
 
     for (int i = 0; i < N; i++)
     {
-        std::cout << "inside loop" << std::endl;
         x[i] = 1.0f;
 	y[i] = 2.0f;
     }
 
-    std::cout << "Entry Into Add" << std::endl;
     add<<<1, 1>>>(N, x, y);
-    std::cout << "Exit Into Add" << std::endl;
 
-    std::cout << "Wait for device to synchronize" << std::endl;
     cudaDeviceSynchronize();
-    std::cout << "Finish device synchronization" << std::endl;
 
     float maxError = 0.0f;
 

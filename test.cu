@@ -5,7 +5,11 @@
 __global__
 void add(int n, float *x, float *y)
 {
-    for (int i = 0; i < n; i++)
+    // index of the current thread within it's block
+    int index = blockIdx.x * blockDim.x * threadIdx.x;
+    // number of threads in the block
+    int stride = blockDim.x * gridDim.x;
+    for (int i = index; i < n; i += stride)
         y[i] = x[i] + y[i];
 }
 
@@ -14,6 +18,7 @@ int main(void)
     int N = 1<<20;
 
     // create and allocate the memory
+    // this is called Unified Memory - accessible from CPU or GPU
     float *x, *y;
     cudaMallocManaged(&x, N*sizeof(float));
     cudaMallocManaged(&y, N*sizeof(float));
@@ -25,8 +30,14 @@ int main(void)
 	y[i] = 2.0f;
     }
 
-    add<<<1, 1>>>(N, x, y);
+    // Run kernal of 1M elements on the gpu
+    // 1.
+    // 2. Number of threads in a thread block
+    int blocksize = 256;
+    int numblocks = (N + blocksize - 1) / blocksize;
+    add<<<numblocks, blocksize>>(N, x, y);
 
+    // wait for gpu to finish before accessing on host
     cudaDeviceSynchronize();
 
     float maxError = 0.0f;
@@ -38,6 +49,7 @@ int main(void)
 
     std::cout << "Max Error: " << maxError << std::endl;
 
+    // free memory
     cudaFree(x);
     cudaFree(y);
 

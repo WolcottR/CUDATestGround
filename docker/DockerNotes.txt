@@ -1,0 +1,61 @@
+# This is how I have start to run things out of the docker container.
+# they are almost certainly not the correct way to do things
+# NOTE: this used to be necessary when I was using CUDA 9.1 on fedora 27 (gcc version was too advanced)
+
+# here is how to start docker when my latop starts
+sudo systemctl start docker
+
+# here is how to check for the container name
+sudo docker ps -a
+
+# creating the correct image from the cuda docker file
+sudo docker build -f /drives/main/Developement/git/CUDATestGround/CUDADockerFile . -t fedora/cudaimage:v0.1
+
+# command to run created image
+sudo docker run -ti -v /usr/local/cuda-9.1:/usr/local/cuda-9.1 fedora/cudaimage:v0.1 /bin/sh
+
+# command to copy compiled files out of a container into current path
+sudo docker cp ${container_name}:/docker/path/to/file .
+
+# compile with cuda compiler and create executable
+/usr/local/cuda-9.0/bin/nvcc test.cu -o driver
+
+# use rpm fusion for correct nvidia driver installs
+
+# how to prune unsused containers/images
+# the syntax might be slightly incorrrect
+sudo docker images prune
+sudo docker container prune
+
+#Thoughts
+I need to figure out a first project to use with the cuda compiler
+Things I want this project to use since I feel they will help my resume
+and growth
+1. CUDA (obviously)	
+2. MT capability
+3. good object-oriented architecture
+4. templetization
+5. SWIG (maybe)
+
+Project ideas
+1. Something CFD related
+2. Something machine learning related
+3. what else is there?
+
+# CUDA links
+# This first one seems to have a good description of blocks v. threads
+http://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html
+# I'm not sure how good this will be but it seems to
+# showcase interesting behavior
+https://devblogs.nvidia.com/efficient-matrix-transpose-cuda-cc/
+# hmm this might be another one with some interesting behavior
+https://devblogs.nvidia.com/finite-difference-methods-cuda-cc-part-1/
+https://devblogs.nvidia.com/finite-difference-methods-cuda-c-part-2/
+# deals with unified memory management etc
+http://www.nvidia.com/docs/IO/116711/sc11-cuda-c-basics.pdf
+# this seems to be in depth about threads and API, maybe out of date
+http://developer.download.nvidia.com/compute/cuda/1.0/NVIDIA_CUDA_Programming_Guide_1.0.pdf
+# mentions things to look into, also has some quick description of dim3
+http://www.icl.utk.edu/~mgates3/docs/cuda.html
+
+
